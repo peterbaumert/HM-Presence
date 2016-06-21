@@ -1,0 +1,24 @@
+<html>
+        <head>
+                <link rel="stylesheet" type="text/css" href="style.css" />
+        </head>
+        <body>
+                <h1>Anwesenheit nach MAC-Adresse</h1>
+
+                <form action="index.cgi" method="post">
+                        <input type="hidden" name="command" value="save" />
+                        <table>
+                                <tr><td>IP/Hostname:</td><td><input name="host" type="text" value="<%host%>" /></td></tr>
+                                <tr><td>Name/MAC:</td><td><textarea name="people" cols="40" rows="5"><%people%></textarea></td></tr>
+                                <tr><td>Anwesenheits ID:</td><td><input name="presence_id" type="text" value="<%presence_id%>" /></td></tr>
+                                <tr><th>&nbsp;</th><td><input type="submit" value="&Uuml;bernehmen" /></td></tr>
+                        </table>
+                </form>
+
+                <h3>Sysvar Liste</h3>
+                <pre>
+<%sysvars%>
+                </pre>
+
+        </body>
+</html>
