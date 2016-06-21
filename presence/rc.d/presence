@@ -1,0 +1,33 @@
+#!/bin/sh
+
+AUTOSTART_DIR=/etc/config/rc.d
+AUTOSTART_SCRIPT=presence
+ADDON_DIR=/etc/config/addons/presence
+CONFIG_URL=/addons/presence/index.cgi
+SCRIPT=presence.tcl
+
+case "$1" in
+""|start)
+        ;;
+info)
+        echo "Version: 1.0"
+        echo "Name: Presence"
+        echo "Operations: uninstall"
+        echo "Info: Check Presence via MAC"
+        echo "Config-Url: $CONFIG_URL"
+        ;;
+restart)
+        ;;
+stop)
+        ;;
+uninstall)
+        CMD=${ADDON_DIR}/${SCRIPT}
+        (crontab -l; echo "*/5 * * * * ${CMD}") | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
+        cd $AUTOSTART_DIR
+        rm -rf $AUTOSTART_SCRIPT
+        ;;
+*)
+        echo "usage:"
+        echo "  presence [info|start|stop|restart|uninstall]"
+        ;;
+esac
