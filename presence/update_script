@@ -7,15 +7,16 @@ ADDONDIR=/usr/local/etc/config/addons/$ADDONENAME
 WWWDIR=/usr/local/etc/config/addons/www/$ADDONENAME
 CONFIGDIR=/usr/local/etc/config
 
-
-mkdir -p /mnt
-if [ "$1" == "CCU2" ]; then
-	echo "CCU2"
-	mount -t ubifs ubi0:root /mnt
-	mount -t ubifs ubi1:user /usr/local
-else
-	echo "CCU1"
-	mount -t yaffs /dev/mtdblock3 /mnt
+if [ "$1" = "" ]; then
+  echo "CCU1"
+  lcdtool "installing $ADDONNAME      "
+  mount -t yaffs /dev/mtdblock3 /usr/local
+elif [ "$1" = "CCU2" ]; then
+  echo "CCU2"
+  mount -t ubifs ubi1:user /usr/local
+elif [ "$1" = "HM-RASPBERRYMATIC" ]; then
+  echo "HM-RASPBERRYMATIC"
+  mount /usr/local
 fi
 
 # Autostart-Script anlegen
@@ -37,19 +38,20 @@ chgrp -R root $ADDONDIR
 # Crontab anlegen
 (crontab -l; echo "*/5 * * * * ${ADDONDIR}/presence.tcl")  | sort - | uniq - | crontab -
 
-if [ "$1" == "CCU2" ]; then
-	echo "dismount"
-	umount /usr/local
-	umount /mnt
-else
-	echo "dismount"
-	umount /mnt
-	
-	echo Rebooting...
-	lcdtool "Reboot...             "
-	lcdtool -a 0x40 -t bin 00
+# sync filesystem to make sure all changes are written to disk
+sync
 
-	echo "x" > /dev/watchdog
-	reboot
-	while true ; do true ;  done
+if [ "$1" = "" ]; then
+  echo "CCU1"
+  lcdtool "Reboot...             "
+  lcdtool -a 0x40 -t bin 00
+  echo "x" > /dev/watchdog
+  reboot
+  while true ; do true ;  done
+elif [ "$1" = "CCU2" ]; then
+  echo "CCU2"
+  # CCU2 always reboots after Addon/Firmware Update
+elif [ "$1" = "HM-RASPBERRYMATIC" ]; then
+  echo "HM-RASPBERRYMATIC"
+  # RASPBERRYMATIC always reboots after Addon/Firmware Update
 fi
