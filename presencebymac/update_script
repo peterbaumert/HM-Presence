@@ -1,11 +1,10 @@
 #!/bin/sh
 
-ADDONENAME=presence
+ADDONENAME=presencebymac
 
 RCDDIR=/usr/local/etc/config/rc.d
 ADDONDIR=/usr/local/etc/config/addons/$ADDONENAME
 WWWDIR=/usr/local/etc/config/addons/www/$ADDONENAME
-CONFIGDIR=/usr/local/etc/config
 
 if [ "$1" = "" ]; then
   echo "CCU1"
@@ -36,6 +35,7 @@ chown -R root $ADDONDIR
 chgrp -R root $ADDONDIR
 
 # SSH KEYGEN
+mkdir -p $ADDONDIR/modules/sophos
 ssh-keygen -t rsa -N "" -f $ADDONDIR/modules/sophos/id_rsa
 
 # Crontab anlegen
