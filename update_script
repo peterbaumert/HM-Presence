@@ -38,9 +38,6 @@ chgrp -R root $ADDONDIR
 mkdir -p $ADDONDIR/modules/ssh
 ssh-keygen -t rsa -N "" -f $ADDONDIR/modules/ssh/id_rsa
 
-# Crontab anlegen
-(crontab -l; echo "*/5 * * * * ${ADDONDIR}/${ADDONNAME}.tcl")  | sort - | uniq - | crontab -
-
 # sync filesystem to make sure all changes are written to disk
 sync
 
