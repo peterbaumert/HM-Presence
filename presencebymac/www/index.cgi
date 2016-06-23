@@ -2,8 +2,10 @@
 
 load tclrega.so
 
-set MODULESLOC "/etc/config/addons/presence/modules"
-set FILENAME "/etc/config/addons/presence/presence.conf"
+set ADDON_NAME "presencebymac"
+
+set MODULESLOC "/etc/config/addons/${ADDON_NAME}/modules"
+set FILENAME "/etc/config/addons/${ADDON_NAME}/${ADDON_NAME}.conf"
 
 set host 127.0.0.1
 set people ""
