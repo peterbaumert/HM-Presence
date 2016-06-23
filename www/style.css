@@ -26,4 +26,5 @@ pre {
         color: black;
         width: 500px;
         word-wrap: break-word;
+        white-space: pre-wrap;
 }
