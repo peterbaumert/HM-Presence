@@ -1,6 +1,6 @@
 proc getMacs { } {
         global PATH host
-        set sophos [exec ssh -oStrictHostKeyChecking=no -i ${PATH}/modules/sophos/id_rsa root@${host} /usr/local/bin/confd-client.plx get_wireless_status 2>/dev/null]
+        set sophos [exec ssh -oStrictHostKeyChecking=no -i ${PATH}/modules/ssh/id_rsa root@${host} /usr/local/bin/confd-client.plx get_wireless_status 2>/dev/null]
 
         regsub -all {\n} $sophos "" sophos
         regsub -all {[ ]{2,}} $sophos " " sophos
