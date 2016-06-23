@@ -8,6 +8,7 @@ ADDONDIR=/etc/config/addons/$ADDONNAME
 WWWDIR=/usr/local/etc/config/addons/www/$ADDONNAME
 CONFIG_URL=/addons/$ADDONNAME/index.cgi
 SCRIPT=$ADDONNAME.tcl
+CMD=${ADDONDIR}/${SCRIPT}
 
 case "$1" in
 ""|start)
@@ -25,7 +26,6 @@ restart)
 stop)
         ;;
 uninstall)
-        CMD=${ADDONDIR}/${SCRIPT}
         crontab -l | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
         rm -f $AUTOSTART_DIR/$AUTOSTART_SCRIPT
         rm -f /tmp/presence.state
