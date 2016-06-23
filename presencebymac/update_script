@@ -1,10 +1,10 @@
 #!/bin/sh
 
-ADDONENAME=presencebymac
+ADDONNAME=presencebymac
 
 RCDDIR=/usr/local/etc/config/rc.d
-ADDONDIR=/usr/local/etc/config/addons/$ADDONENAME
-WWWDIR=/usr/local/etc/config/addons/www/$ADDONENAME
+ADDONDIR=/usr/local/etc/config/addons/$ADDONNAME
+WWWDIR=/usr/local/etc/config/addons/www/$ADDONNAME
 
 if [ "$1" = "" ]; then
   echo "CCU1"
@@ -19,8 +19,8 @@ elif [ "$1" = "HM-RASPBERRYMATIC" ]; then
 fi
 
 # Autostart-Script anlegen
-cp rc.d/$ADDONENAME $RCDDIR
-chmod +x $RCDDIR/$ADDONENAME
+cp rc.d/$ADDONNAME $RCDDIR
+chmod +x $RCDDIR/$ADDONNAME
 
 # Web-Konfiguration anlegen
 mkdir -p $WWWDIR
@@ -39,7 +39,7 @@ mkdir -p $ADDONDIR/modules/ssh
 ssh-keygen -t rsa -N "" -f $ADDONDIR/modules/ssh/id_rsa
 
 # Crontab anlegen
-(crontab -l; echo "*/5 * * * * ${ADDONDIR}/presence.tcl")  | sort - | uniq - | crontab -
+(crontab -l; echo "*/5 * * * * ${ADDONDIR}/${ADDONNAME}.tcl")  | sort - | uniq - | crontab -
 
 # sync filesystem to make sure all changes are written to disk
 sync
