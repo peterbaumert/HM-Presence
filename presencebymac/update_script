@@ -35,8 +35,8 @@ chown -R root $ADDONDIR
 chgrp -R root $ADDONDIR
 
 # SSH KEYGEN
-mkdir -p $ADDONDIR/modules/sophos
-ssh-keygen -t rsa -N "" -f $ADDONDIR/modules/sophos/id_rsa
+mkdir -p $ADDONDIR/modules/ssh
+ssh-keygen -t rsa -N "" -f $ADDONDIR/modules/ssh/id_rsa
 
 # Crontab anlegen
 (crontab -l; echo "*/5 * * * * ${ADDONDIR}/presence.tcl")  | sort - | uniq - | crontab -
