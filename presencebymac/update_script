@@ -19,7 +19,7 @@ elif [ "$1" = "HM-RASPBERRYMATIC" ]; then
 fi
 
 # Autostart-Script anlegen
-cp ./rc.d/$ADDONENAME $RCDDIR
+cp rc.d/$ADDONENAME $RCDDIR
 chmod +x $RCDDIR/$ADDONENAME
 
 # Web-Konfiguration anlegen
