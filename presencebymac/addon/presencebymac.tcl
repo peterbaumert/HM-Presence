@@ -2,12 +2,14 @@
 
 load tclrega.so
 
+set ADDON_NAME "presencebymac"
+
 set host "127.0.0.1"
 set people ""
 set presence_id ""
 set module ""
-set PATH "/etc/config/addons/presence"
-set FILENAME "${PATH}/presence.conf"
+set PATH "/etc/config/addons/${ADDON_NAME}"
+set FILENAME "${PATH}/${ADDON_NAME}.conf"
 
 source ${PATH}/functions.tcl
 
