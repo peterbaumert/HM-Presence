@@ -1,17 +1,19 @@
 #!/bin/sh
 
+ADDONNAME=presencebymac
+
 AUTOSTART_DIR=/etc/config/rc.d
-AUTOSTART_SCRIPT=presence
-ADDON_DIR=/etc/config/addons/presence
-CONFIG_URL=/addons/presence/index.cgi
-SCRIPT=presence.tcl
+AUTOSTART_SCRIPT=$ADDONNAME
+ADDON_DIR=/etc/config/addons/$ADDONNAME
+CONFIG_URL=/addons/$ADDONNAME/index.cgi
+SCRIPT=$ADDONNAME.tcl
 
 case "$1" in
 ""|start)
         ;;
 info)
         echo "Version: 1.0"
-        echo "Name: Presence"
+        echo "Name: $ADDONNAME"
         echo "Operations: uninstall"
         echo "Info: Check Presence via MAC"
         echo "Config-Url: $CONFIG_URL"
@@ -28,6 +30,6 @@ uninstall)
         ;;
 *)
         echo "usage:"
-        echo "  presence [info|start|stop|restart|uninstall]"
+        echo "  $ADDONNAME [info|start|stop|restart|uninstall]"
         ;;
 esac
