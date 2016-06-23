@@ -45,7 +45,7 @@ proc main { } {
         source ${PATH}/modules/${module}.tcl
 
         if {![file exists /tmp/presence.state]} {
-                touch /tmp/presence.state
+                exec touch /tmp/presence.state
         }
 
         set prev [exec cat /tmp/presence.state]
