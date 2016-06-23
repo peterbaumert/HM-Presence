@@ -107,6 +107,11 @@ proc getSysVarList { } {
         }]
 }
 
+proc getSSHKey { } {
+        global sshkey MODULESLOC
+        set sshkey [loadFile ${MODULESLOC}/ssh/id_rsa.pub]
+}
+
 parseQuery
 if { $args(command) == "save" } {
         saveConfigFile
@@ -115,6 +120,7 @@ if { $args(command) == "save" } {
 loadConfigFile
 getSysVarList
 getModules
+getSSHKey
 
 set content [loadFile index.template.html]
 regsub -all {<%host%>} $content $host content
@@ -122,5 +128,6 @@ regsub -all {<%people%>} $content $people content
 regsub -all {<%presence_id%>} $content $presence_id content
 regsub -all {<%sysvars%>} $content $res(STDOUT) content
 regsub -all {<%modules%>} $content $modules content
+regsub -all {<%sshkey%>} $content $sshkey content
 
 puts $content
