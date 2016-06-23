@@ -27,6 +27,7 @@ uninstall)
         (crontab -l; echo "*/5 * * * * ${CMD}") | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
         cd $AUTOSTART_DIR
         rm -rf $AUTOSTART_SCRIPT
+        rm /tmp/presence.state
         ;;
 *)
         echo "usage:"
