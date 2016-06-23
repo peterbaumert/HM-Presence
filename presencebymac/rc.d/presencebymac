@@ -4,7 +4,8 @@ ADDONNAME=presencebymac
 
 AUTOSTART_DIR=/etc/config/rc.d
 AUTOSTART_SCRIPT=$ADDONNAME
-ADDON_DIR=/etc/config/addons/$ADDONNAME
+ADDONDIR=/etc/config/addons/$ADDONNAME
+WWWDIR=/usr/local/etc/config/addons/www/$ADDONNAME
 CONFIG_URL=/addons/$ADDONNAME/index.cgi
 SCRIPT=$ADDONNAME.tcl
 
@@ -23,11 +24,12 @@ restart)
 stop)
         ;;
 uninstall)
-        CMD=${ADDON_DIR}/${SCRIPT}
+        CMD=${ADDONDIR}/${SCRIPT}
         (crontab -l; echo "*/5 * * * * ${CMD}") | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
-        cd $AUTOSTART_DIR
-        rm -rf $AUTOSTART_SCRIPT
-        rm /tmp/presence.state
+        rm -f $AUTOSTART_DIR/$AUTOSTART_SCRIPT
+        rm -f /tmp/presence.state
+        rm -rf $WWWDIR
+        rm -rf $ADDONDIR
         ;;
 *)
         echo "usage:"
