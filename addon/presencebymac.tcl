@@ -62,7 +62,6 @@ proc main { } {
                 if {[string match *[string toupper $mac]* [string toupper $macs]]} {
                         set home 1
                         debug 1 "$name with $mac is home"
-                        break
                 }
         }
 
