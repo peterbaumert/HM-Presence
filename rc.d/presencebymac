@@ -11,6 +11,7 @@ SCRIPT=$ADDONNAME.tcl
 
 case "$1" in
 ""|start)
+        (crontab -l; echo "*/5 * * * * ${CMD}") | sort - | uniq - | crontab -
         ;;
 info)
         echo "Version: 1.0"
@@ -25,7 +26,7 @@ stop)
         ;;
 uninstall)
         CMD=${ADDONDIR}/${SCRIPT}
-        (crontab -l; echo "*/5 * * * * ${CMD}") | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
+        crontab -l | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
         rm -f $AUTOSTART_DIR/$AUTOSTART_SCRIPT
         rm -f /tmp/presence.state
         rm -rf $WWWDIR
