@@ -3,12 +3,13 @@
 ADDONNAME=presencebymac
 
 AUTOSTART_DIR=/etc/config/rc.d
-AUTOSTART_SCRIPT=$ADDONNAME
-ADDONDIR=/etc/config/addons/$ADDONNAME
-WWWDIR=/etc/config/addons/www/$ADDONNAME
-CONFIG_URL=/addons/$ADDONNAME/index.cgi
-SCRIPT=$ADDONNAME.tcl
+AUTOSTART_SCRIPT=${ADDONNAME}
+ADDONDIR=/etc/config/addons/${ADDONNAME}
+WWWDIR=/etc/config/addons/www/${ADDONNAME}
+CONFIG_URL=/addons/${ADDONNAME}/index.cgi
+SCRIPT=${ADDONNAME}.tcl
 CMD=${ADDONDIR}/${SCRIPT}
+TMPDIR=/tmp
 
 case "$1" in
 ""|start)
@@ -16,10 +17,10 @@ case "$1" in
         ;;
 info)
         echo "Version: 1.0"
-        echo "Name: $ADDONNAME"
+        echo "Name: ${ADDONNAME}"
         echo "Operations: uninstall"
         echo "Info: Check Presence via MAC"
-        echo "Config-Url: $CONFIG_URL"
+        echo "Config-Url: ${CONFIG_URL}"
         ;;
 restart)
         ;;
@@ -27,13 +28,14 @@ stop)
         ;;
 uninstall)
         crontab -l | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
-        rm -f $AUTOSTART_DIR/$AUTOSTART_SCRIPT
+        cp ${ADDONDIR}/${ADDONNAME}.conf ${TMPDIR}/${ADDONNAME}.conf
+        rm -f ${AUTOSTART_DIR}/${AUTOSTART_SCRIPT}
         rm -f /tmp/presence.state
-        rm -rf $WWWDIR
-        rm -rf $ADDONDIR
+        rm -rf ${WWWDIR}
+        rm -rf ${ADDONDIR}
         ;;
 *)
         echo "usage:"
-        echo "  $ADDONNAME [info|start|stop|restart|uninstall]"
+        echo "  ${ADDONNAME} [info|start|stop|restart|uninstall]"
         ;;
 esac
