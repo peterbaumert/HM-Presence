@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.0.0](https://github.com/peterbaumert/HM-PresenceByMAC/tree/1.0.0) (2016-06-23)
+## [1.0.0](https://github.com/peterbaumert/HM-PresenceByMAC/tree/v1.0.0) (2016-06-23)
 
 **Initial Release:**
 
