@@ -72,10 +72,10 @@ proc main { } {
         debug 1 "Anwesenheit in CCU: $result(STDOUT)"
 
         if {"$result(STDOUT)" == "true" && !$home && !$prev} {
-                set rega_cmd "dom.GetObject(${presence_id}).Variable(false);"
+                set rega_cmd "dom.GetObject(${presence_id}).State(false);"
                 rega_script $rega_cmd
         } elseif {"$result(STDOUT)" == "false" && $home} {
-                set rega_cmd "dom.GetObject(${presence_id}).Variable(true);"
+                set rega_cmd "dom.GetObject(${presence_id}).State(true);"
                 rega_script $rega_cmd
         }
 
