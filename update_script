@@ -3,13 +3,13 @@
 ADDONNAME=presencebymac
 
 RCDDIR=/usr/local/etc/config/rc.d
-ADDONDIR=/usr/local/etc/config/addons/$ADDONNAME
-WWWDIR=/usr/local/etc/config/addons/www/$ADDONNAME
+ADDONDIR=/usr/local/etc/config/addons/${ADDONNAME}
+WWWDIR=/usr/local/etc/config/addons/www/${ADDONNAME}
 TMPDIR=/tmp
 
 if [ "$1" = "" ]; then
   echo "CCU1"
-  lcdtool "installing $ADDONNAME      "
+  lcdtool "installing ${ADDONNAME}      "
   mount -t yaffs /dev/mtdblock3 /usr/local
 elif [ "$1" = "CCU2" ]; then
   echo "CCU2"
@@ -20,24 +20,24 @@ elif [ "$1" = "HM-RASPBERRYMATIC" ]; then
 fi
 
 # Autostart-Script anlegen
-cp rc.d/$ADDONNAME $RCDDIR
-chmod +x $RCDDIR/$ADDONNAME
+cp rc.d/${ADDONNAME} ${RCDDIR}
+chmod +x ${RCDDIR}/${ADDONNAME}
 
 # Web-Konfiguration anlegen
-mkdir -p $WWWDIR
-cp -rp www/* $WWWDIR
-chmod -R 755 $WWWDIR
+mkdir -p ${WWWDIR}
+cp -rp www/* ${WWWDIR}
+chmod -R 755 ${WWWDIR}
 
 # Addon-Verzeichnis anlegen
-mkdir -p $ADDONDIR
-cp -rp addon/* $ADDONDIR
-chmod -R 755 $ADDONDIR
-chown -R root $ADDONDIR
-chgrp -R root $ADDONDIR
+mkdir -p ${ADDONDIR}
+cp -rp addon/* ${ADDONDIR}
+chmod -R 755 ${ADDONDIR}
+chown -R root ${ADDONDIR}
+chgrp -R root ${ADDONDIR}
 
 # SSH KEYGEN
-mkdir -p $ADDONDIR/modules/ssh
-ssh-keygen -t rsa -N "" -f $ADDONDIR/modules/ssh/id_rsa
+mkdir -p ${ADDONDIR}/modules/ssh
+ssh-keygen -t rsa -N "" -f ${ADDONDIR}/modules/ssh/id_rsa
 
 # Alte conf kopieren
 if [ -f ${TMPDIR}/${ADDONNAME}.conf ]; then
