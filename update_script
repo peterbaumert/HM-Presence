@@ -5,6 +5,7 @@ ADDONNAME=presencebymac
 RCDDIR=/usr/local/etc/config/rc.d
 ADDONDIR=/usr/local/etc/config/addons/$ADDONNAME
 WWWDIR=/usr/local/etc/config/addons/www/$ADDONNAME
+TMPDIR=/tmp
 
 if [ "$1" = "" ]; then
   echo "CCU1"
@@ -37,6 +38,11 @@ chgrp -R root $ADDONDIR
 # SSH KEYGEN
 mkdir -p $ADDONDIR/modules/ssh
 ssh-keygen -t rsa -N "" -f $ADDONDIR/modules/ssh/id_rsa
+
+# Alte conf kopieren
+if [ -f ${TMPDIR}/${ADDONNAME}.conf ]; then
+  cp ${TMPDIR}/${ADDONNAME}.conf ${ADDONDIR}/${ADDONNAME}.conf
+fi
 
 # sync filesystem to make sure all changes are written to disk
 sync
