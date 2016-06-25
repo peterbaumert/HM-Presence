@@ -6,6 +6,7 @@ RCDDIR=/usr/local/etc/config/rc.d
 ADDONDIR=/usr/local/etc/config/addons/${ADDONNAME}
 WWWDIR=/usr/local/etc/config/addons/www/${ADDONNAME}
 TMPDIR=/tmp
+DROPBEARKEY=/usr/local/addons/dropbear/dropbearkey
 
 if [ "$1" = "" ]; then
   echo "CCU1"
@@ -37,7 +38,12 @@ chgrp -R root ${ADDONDIR}
 
 # SSH KEYGEN
 mkdir -p ${ADDONDIR}/modules/ssh
-ssh-keygen -t rsa -N "" -f ${ADDONDIR}/modules/ssh/id_rsa
+if [ "$1" = "" && -f ${DROPBEARKEY} ]; then
+  ${DROPBEARKEY} -t rsa -f ${ADDONDIR}/modules/ssh/id_rsa
+  ${DROPBEARKEY} -y -f ${ADDONDIR}/modules/ssh/id_rsa | grep "^ssh-rsa " >> ${ADDONDIR}/modules/ssh/id_rsa.pub
+elif  [ "$1" = "CCU2" ]; then
+  ssh-keygen -t rsa -N "" -f ${ADDONDIR}/modules/ssh/id_rsa
+fi
 
 # Alte conf kopieren
 if [ -f ${TMPDIR}/${ADDONNAME}.conf ]; then
