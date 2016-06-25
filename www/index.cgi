@@ -6,6 +6,7 @@ set ADDON_NAME "presencebymac"
 
 set MODULESLOC "/etc/config/addons/${ADDON_NAME}/modules"
 set FILENAME "/etc/config/addons/${ADDON_NAME}/${ADDON_NAME}.conf"
+set CCUTYPES "CCU1 CCU2 RASPI"
 
 set host 127.0.0.1
 set people ""
@@ -100,6 +101,18 @@ proc getModules { } {
         }
 }
 
+proc getCCUType { } {
+        global CCUTYPES ccu ccus
+
+        foreach {ver} $CCUTYPES {
+                set selected ""
+                if {$ver == $ccu} {
+                        set selected "selected"
+                }
+                append ccus "<option value=\"${ver}\" ${selected}>${ver}</option>"
+        }
+}
+
 proc getSysVarList { } {
         global res
         array set res [rega_script {
@@ -126,6 +139,7 @@ loadConfigFile
 getSysVarList
 getModules
 getSSHKey
+getCCUType
 
 set content [loadFile index.template.html]
 regsub -all {<%host%>} $content $host content
@@ -134,6 +148,6 @@ regsub -all {<%presence_id%>} $content $presence_id content
 regsub -all {<%sysvars%>} $content $res(STDOUT) content
 regsub -all {<%modules%>} $content $modules content
 regsub -all {<%sshkey%>} $content $sshkey content
-regsub -all {<%ccu%>} $content $ccu content
+regsub -all {<%ccus%>} $content $ccus content
 
 puts $content
