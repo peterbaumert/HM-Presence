@@ -39,5 +39,6 @@ proc debug { level message } {
         global DEBUG
         if { $level <= $DEBUG } {
                 puts "DEBUG: $message"
+                log $message
         }
 }
