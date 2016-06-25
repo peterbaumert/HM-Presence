@@ -28,9 +28,8 @@ stop)
         ;;
 uninstall)
         crontab -l | sort - | uniq - | sed "s/$(echo "*/5 * * * * ${CMD}" | sed -e 's/[]\/$*.^|[]/\\&/g')//g" | sed '/^$/d' | crontab -
-        cp ${ADDONDIR}/${ADDONNAME}.conf ${TMPDIR}/${ADDONNAME}.conf
         rm -f ${AUTOSTART_DIR}/${AUTOSTART_SCRIPT}
-        rm -f /tmp/presence.state
+        rm -f ${TMPDIR}/presence.state
         rm -rf ${WWWDIR}
         rm -rf ${ADDONDIR}
         ;;
