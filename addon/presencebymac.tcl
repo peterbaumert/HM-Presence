@@ -46,6 +46,7 @@ proc main { } {
 
         if {![file exists /tmp/presence.state]} {
                 exec touch /tmp/presence.state
+                exec echo 1 > /tmp/presence.state
         }
 
         set prev [exec cat /tmp/presence.state]
