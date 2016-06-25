@@ -38,16 +38,13 @@ chgrp -R root ${ADDONDIR}
 
 # SSH KEYGEN
 mkdir -p ${ADDONDIR}/modules/ssh
-if [ "$1" = "" && -f ${DROPBEARKEY} ]; then
-  ${DROPBEARKEY} -t rsa -f ${ADDONDIR}/modules/ssh/id_rsa
-  ${DROPBEARKEY} -y -f ${ADDONDIR}/modules/ssh/id_rsa | grep "^ssh-rsa " >> ${ADDONDIR}/modules/ssh/id_rsa.pub
-elif  [ "$1" = "CCU2" ]; then
-  ssh-keygen -t rsa -N "" -f ${ADDONDIR}/modules/ssh/id_rsa
-fi
-
-# Alte conf kopieren
-if [ -f ${TMPDIR}/${ADDONNAME}.conf ]; then
-  cp ${TMPDIR}/${ADDONNAME}.conf ${ADDONDIR}/${ADDONNAME}.conf
+if [ ! -f ${ADDONDIR}/modules/ssh/id_rsa ]; then
+  if [ "$1" = "" && -f ${DROPBEARKEY} ]; then
+    ${DROPBEARKEY} -t rsa -f ${ADDONDIR}/modules/ssh/id_rsa
+    ${DROPBEARKEY} -y -f ${ADDONDIR}/modules/ssh/id_rsa | grep "^ssh-rsa " >> ${ADDONDIR}/modules/ssh/id_rsa.pub
+  elif  [ "$1" = "CCU2" ]; then
+    ssh-keygen -t rsa -N "" -f ${ADDONDIR}/modules/ssh/id_rsa
+  fi
 fi
 
 # sync filesystem to make sure all changes are written to disk
