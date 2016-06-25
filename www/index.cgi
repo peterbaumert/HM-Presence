@@ -11,12 +11,14 @@ set host 127.0.0.1
 set people ""
 set presence_id ""
 set module ""
+set ccu ""
 
 set args(command) "INV"
 set args(host) $host
 set args(people) $people
 set args(presence_id) $presence_id
 set args(module) $module
+set args(ccu) $ccu
 
 proc parseQuery { } {
         global args env
@@ -50,18 +52,20 @@ proc loadFile { fileName } {
 }
 
 proc loadConfigFile { } {
-        global FILENAME host people presence_id module
+        global FILENAME host people presence_id module ccu
 
         set content(HOST) $host
         set content(PEOPLE) $people
         set content(PRESENCE_ID) $presence_id
         set content(MODULE) $module
+        set content(CCU) $ccu
         catch { array set content [loadFile $FILENAME] }
 
         set host $content(HOST)
         set people $content(PEOPLE)
         set presence_id $content(PRESENCE_ID)
         set module $content(MODULE)
+        set ccu $content(CCU)
 }
 
 proc saveConfigFile { } {
@@ -72,6 +76,7 @@ proc saveConfigFile { } {
         set content(PEOPLE) $args(people)
         set content(PRESENCE_ID) $args(presence_id)
         set content(MODULE) $args(module)
+        set content(CCU) $args(ccu)
 
         set fd [open $FILENAME w]
         puts $fd [array get content]
@@ -129,5 +134,6 @@ regsub -all {<%presence_id%>} $content $presence_id content
 regsub -all {<%sysvars%>} $content $res(STDOUT) content
 regsub -all {<%modules%>} $content $modules content
 regsub -all {<%sshkey%>} $content $sshkey content
+regsub -all {<%ccu%>} $content $ccu content
 
 puts $content
