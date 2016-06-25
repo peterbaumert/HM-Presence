@@ -8,37 +8,41 @@ set host "127.0.0.1"
 set people ""
 set presence_id ""
 set module ""
+set ccu ""
 set PATH "/etc/config/addons/${ADDON_NAME}"
 set FILENAME "${PATH}/${ADDON_NAME}.conf"
 
 source ${PATH}/functions.tcl
 
 proc loadConfigFile { } {
-        global FILENAME host people presence_id module
+        global FILENAME host people presence_id module ccu
 
         set content(HOST) $host
         set content(PEOPLE) $people
         set content(PRESENCE_ID) $presence_id
         set content(MODULE) $module
+        set content(CCU) $ccu
         catch { array set content [loadFile $FILENAME] }
 
         set host $content(HOST)
         set people $content(PEOPLE)
         set presence_id $content(PRESENCE_ID)
         set module $content(MODULE)
+        set ccu $content(CCU)
 
         debug 1 "Host: $host"
         debug 1 "People: $people"
         debug 1 "ID: $presence_id"
         debug 1 "Module: $module"
+        debug 1 "CCU: $ccu"
 }
 
 proc main { } {
-        global PATH host people presence_id module
+        global PATH host people presence_id module ccu
 
         loadConfigFile
 
-        if {$host == "127.0.0.1" || $people == "" || $presence_id == "" || $module == ""} {
+        if {$host == "127.0.0.1" || $people == "" || $presence_id == "" || $module == "" || $ccu == ""} {
                 error "Config not complete"
         }
 
