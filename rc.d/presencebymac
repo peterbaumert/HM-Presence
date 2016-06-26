@@ -16,7 +16,7 @@ case "$1" in
         (crontab -l; echo "*/5 * * * * ${CMD}") | sort - | uniq - | crontab -
         ;;
 info)
-        echo "Version: 1.0"
+        echo "Version: 1.0.2"
         echo "Name: ${ADDONNAME}"
         echo "Operations: uninstall"
         echo "Info: Check Presence via MAC"
