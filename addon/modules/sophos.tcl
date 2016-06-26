@@ -1,6 +1,10 @@
 proc getMacs { } {
-        global PATH host
-        set sophos [exec ssh -oStrictHostKeyChecking=no -i ${PATH}/modules/ssh/id_rsa root@${host} /usr/local/bin/confd-client.plx get_wireless_status 2>/dev/null]
+        global PATH host ccu
+        if {$ccu == "CCU1"} {
+                set sophos [exec /usr/local/addons/dropbear/dbclient -y -i ${PATH}/modules/ssh/id_rsa root@${host} /usr/local/bin/confd-client.plx get_wireless_status 2>/dev/null]
+        } elseif {$ccu == "CCU2"} {
+                set sophos [exec ssh -oStrictHostKeyChecking=no -i ${PATH}/modules/ssh/id_rsa root@${host} /usr/local/bin/confd-client.plx get_wireless_status 2>/dev/null]
+        }
 
         regsub -all {\n} $sophos "" sophos
         regsub -all {[ ]{2,}} $sophos " " sophos
